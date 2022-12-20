@@ -1,0 +1,525 @@
+﻿
+@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>Index</title>
+
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/css/bootstrap.min.css" integrity="sha384-xOolHFLEh07PJGoPkLv1IbcEPTNtaed2xpHsD9ESMhqIYd0nLMwNLD69Npy4HI+N" crossorigin="anonymous">
+    <link href="https://cdn.datatables.net/1.12.1/css/jquery.dataTables.min.css" rel="stylesheet" />
+    <link href="https://cdn.datatables.net/buttons/2.2.3/css/buttons.dataTables.min.css" rel="stylesheet" />
+    <link href="https://cdn.datatables.net/fixedheader/3.2.3/css/fixedHeader.dataTables.min.css" rel="stylesheet" />
+
+
+
+    <style>
+        thead input {
+            width: 100%;
+        }
+    </style>
+</head>
+
+
+
+<body>
+
+
+    <input type="text" class="form-control" id="txt_idempresa" style="display:none;">
+    <input type="text" class="form-control" id="txt_idsucursal" style="display:none;">
+    <input type="text" class="form-control" id="txt_iddeposito" style="display:none;">
+
+    <!--  modal nuevo deposito -->
+    <div id="modal_nuevo_deposito" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" style="display: none;">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h4 class="modal-title">Ingresar Nuevo Artículo</h4>
+                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+                </div>
+                <div class="modal-body p-4">
+                    <div class="row">
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label for="field-1" class="control-label">Empresa</label>
+                                <input type="text" class="form-control" id="txt_nombre_empresa">
+                            </div>
+                        </div>
+                        <div class="col-md-6" style="display:none;">
+                            <div class="form-group">
+                                <label for="field-2" class="control-label">Sucursal</label>
+                                <input type="text" class="form-control" id="txt_nombre_sucursal">
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="col-md-8">
+                            <div class="form-group">
+                                <label for="field-1" class="control-label">Articulo</label>
+                                <input type="text" class="form-control" id="txt_nombre_articulo">
+                            </div>
+                        </div>
+                        <div class="col-md-4">
+                            <div class="form-group">
+                                <label for="field-2" class="control-label">Cantidad</label>
+                                <input type="text" class="form-control" id="txt_cantidad">
+                            </div>
+                        </div>
+                    </div>
+
+
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary waves-effect" data-dismiss="modal">Close</button>
+                    <button type="button" class="btn btn-info waves-effect waves-light" onclick="Registrar_Articulo();">Guardar</button>
+                </div>
+            </div>
+        </div>
+    </div><!-- /.modal -->
+    <!--  modal nuevo empresa -->
+    <div id="modal_registrar_empresa" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" style="display: none;">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h4 class="modal-title">Ingresar Nuevo Artículo</h4>
+                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+                </div>
+                <div class="modal-body p-4">
+                    <div class="row">
+                        <div class="col-md-12">
+                            <div class="form-group">
+                                <label for="field-1" class="control-label">Empresa</label>
+                                <input type="text" class="form-control" id="txt_empresa">
+                            </div>
+                        </div>
+
+                    </div>
+
+                    <div class="row">
+                        <div class="col-md-12">
+                            <div class="form-group">
+                                <label for="field-2" class="control-label">Direccion</label>
+                                <input type="text" class="form-control" id="txt_direccion">
+                            </div>
+                        </div>
+
+                    </div>
+
+
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary waves-effect" data-dismiss="modal">Close</button>
+                    <button type="button" class="btn btn-info waves-effect waves-light" onclick="Registrar_Empresa();">Guardar</button>
+                </div>
+            </div>
+        </div>
+    </div><!-- /.modal -->
+    <!--  modal nuevo sucursal -->
+    <div id="modal_registrar_sucursal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" style="display: none;">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h4 class="modal-title">Ingresar Nueva Sucursal</h4>
+                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+                </div>
+                <div class="modal-body p-4">
+                    <div class="row">
+                        <div class="col-md-12">
+                            <div class="form-group">
+                                <label for="field-1" class="control-label">Nombre Sucursal</label>
+                                <input type="text" class="form-control" id="txt_sucursal">
+                            </div>
+                        </div>
+
+                    </div>
+
+                    
+
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary waves-effect" data-dismiss="modal">Close</button>
+                    <button type="button" class="btn btn-info waves-effect waves-light" onclick="Registrar_Sucursal();">Guardar</button>
+                </div>
+            </div>
+        </div>
+    </div><!-- /.modal -->
+    <!--  modal administrar empresa -->
+    <div id="modal_administrar" class="modal fade bs-example-modal-lg" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true" style="display: none;">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h4 class="modal-title" id="myLargeModalLabel">Large modal</h4>
+                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+                </div>
+                <div class="modal-body">
+                 
+
+                    <hr />
+                    <br />
+                    <button type="button" class="btn btn-info waves-effect waves-light" onclick="Abrir_registro_sucursal();">Nueva Sucursal</button>
+                    <br />
+                    <br />
+                    <h5>Lista de sucursales</h5>
+                    <br />
+                    <div class="table-responsive">
+                        <table id="tbSucursales" class="table mb-0" style="width: 100%;">
+                            <thead class="thead-light" style="width: 100%;">
+                                <tr>
+                                    <th>Nombre Sucursal</th>
+                                    <th>-</th>
+                                    <th>-</th>
+                                </tr>
+                            </thead>
+                        </table>
+                    </div>
+
+
+                    <hr />
+                    <br />
+                    <br />
+                    <div>
+
+                        <h5>Lista Articulo en Deposito</h5>
+                        <br />
+
+                        <div class="table-responsive">
+                            <table id="tbDeposito" class="table mb-0" style="width: 100%;">
+                                <thead class="thead-light" style="width: 100%;">
+                                    <tr>
+                                        <th>Nombre Articulo</th>
+                                        <th>Cantidad</th>
+                                        <th>-</th>
+                                    </tr>
+                                </thead>
+                            </table>
+                        </div>
+
+                    </div>
+
+                </div>
+            </div><!-- /.modal-content -->
+        </div><!-- /.modal-dialog -->
+    </div><!-- /.modal -->
+
+
+
+
+    <div class="row">
+        <div class="col-lg-12">
+            <div class="card card-body">
+                <h5 class="card-title">Special title treatment</h5>
+
+                <div class="col-md-4">
+                    <button type="button" class="btn btn-success waves-effect waves-light" data-toggle="modal" data-target="#modal_registrar_empresa">Nueva Empresa</button>
+                </div>
+
+                <br />
+
+                <div class="table-responsive">
+                    <table id="tbEmpresas" class="table mb-0">
+                        <thead class="thead-light">
+                            <tr>
+                                <th>Nombre de Empresa</th>
+                                <th>Dirección</th>
+
+                                <th>-</th>
+
+                            </tr>
+                        </thead>
+
+
+                    </table>
+                </div>
+
+
+            </div>
+        </div>
+
+    </div>
+
+
+
+
+
+
+
+
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.2/jquery.min.js" integrity="sha512-tWHlutFnuG0C6nQRlpvrEhE4QpkG1nn2MOUMWmUeRePl4e3Aki0VB6W1v3oLjFtd0hVOtRQ9PHpSfN6u6/QXkQ==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-Fy6S3B9q64WdZWQUiU+q4/2Lc9npb8tCaSX9FK7E8HnRr0Jz8D6OP9dO5Vg3Q9ct" crossorigin="anonymous"></script>
+
+
+
+    <script src="https://cdn.datatables.net/1.12.1/js/jquery.dataTables.min.js"></script>
+
+    <script src="https://cdn.datatables.net/buttons/2.2.3/js/dataTables.buttons.min.js"></script>
+
+
+
+    <script>
+
+        var tabla_empresas;
+        var tabla_sucursales;
+        var tabla_deposito;
+         $(document).ready( function () {
+             Listar_Empresas();
+
+
+
+
+
+             $('#tbEmpresas').on('click', 'tbody tr', function () {
+                 var row = tabla_empresas.row($(this)).data();
+                 $("#txt_nombre_empresa").val(row['nombre_empresa']);
+                 $("#txt_idempresa").val(row['idEmpresa']);
+
+             });
+
+             $('#tbSucursales').on('click', 'tbody tr', function () {
+                 var row2 = tabla_sucursales.row($(this)).data();
+                 //$("#txt_nombre_sucursal").val(row2['nombre_sucursal']);
+                 $("#txt_idsucursal").val(row2['idSucursal']);
+
+             });
+
+         });
+
+
+
+        function Abrir_registro_sucursal() {
+
+            $('#modal_administrar').modal('hide');
+            $('#modal_registrar_sucursal').modal('show');
+
+        }
+
+        function Listar_Empresas() {
+             tabla_empresas = $('#tbEmpresas').DataTable({
+                "ajax": {
+                    "url": "@Url.Action("Listar_Empresas", "Inicio")",
+                    "type": "GET",
+                    "datatype": "json"
+                },
+                "columns": [
+
+                    { "data": "nombre_empresa" },
+                    { "data": "direccion_empresa" },
+                    {"data": "idEmpresa", "render": function (data) {
+                        return "<button class='btn btn-primary' onclick='Listar_Sucursales(" + data+")'>Administrar</button>"
+                               /* "<button class='btn btn-danger btn-sm ml-2' type='button' onclick='Eliminar(" + data + ")'><i class='fa fa-trash'></i></button>"*/
+                        },
+
+                    }
+                ],
+                 "language": {
+                     "url": "@Url.Content("~/datatable/idioma/es-ES.json")"
+                 }
+
+            });
+        }
+
+        function Listar_Sucursales($IdEmpresa) {
+
+            var table = $('#tbSucursales').DataTable();
+            table.destroy();
+
+            tabla_sucursales = $('#tbSucursales').DataTable({
+                "ajax": {
+                     "url": "@Url.Action("Listar_Sucursales", "Inicio")" + "?IdEmpresa=" + $IdEmpresa,
+                    "type": "GET",
+                    "datatype": "json"
+                },
+                "columns": [
+                    { "data": "nombre_sucursal" },
+                    {"data": "idSucursal", "render": function (data) {
+                        return "<button class='btn btn-primary' onclick='Listar_Deposito(" + data + ")'>Ver Deposito</button>"
+                               /* "<button class='btn btn-danger btn-sm ml-2' type='button' onclick='Eliminar(" + data + ")'><i class='fa fa-trash'></i></button>"*/
+                        },
+
+                    },
+                    {
+                        "data": "idSucursal", "render": function (data) {
+                            return "<button class='btn btn-primary' onclick='Nuevo_Articulo(" + data + ")'>Ingresar Articulo</button>"
+                            /* "<button class='btn btn-danger btn-sm ml-2' type='button' onclick='Eliminar(" + data + ")'><i class='fa fa-trash'></i></button>"*/
+                        },
+
+                    }
+                ],
+                 "language": {
+                     "url": "@Url.Content("~/datatable/idioma/es-ES.json")"
+                 }
+
+            });
+
+            $('#modal_administrar').modal('show');
+        }
+
+
+        function Listar_Deposito($IdSucursal) {
+
+
+            var table = $('#tbDeposito').DataTable();
+            table.destroy();
+            tabla_sucursales = $('#tbDeposito').DataTable({
+                "ajax": {
+                    "url": "@Url.Action("Listar_Deposito", "Inicio")" + "?IdSucursal=" + $IdSucursal,
+                    "type": "GET",
+                    "datatype": "json"
+                },
+                "columns": [
+                    { "data": "nombre_articulo" },
+                    { "data": "cantidad" },
+                    {"data": "idDeposito", "render": function (data) {
+                        return "<button class='btn btn-primary' onclick='Listar_Deposito(" + data+")'>Ver Deposito</button>"
+                               /* "<button class='btn btn-danger btn-sm ml-2' type='button' onclick='Eliminar(" + data + ")'><i class='fa fa-trash'></i></button>"*/
+                        },
+
+                    }
+                ],
+                 "language": {
+                     "url": "@Url.Content("~/datatable/idioma/es-ES.json")"
+                 }
+
+            });
+
+
+
+
+        }
+
+
+        function Nuevo_Articulo() {
+
+            $('#modal_administrar').modal('hide');
+            $('#modal_nuevo_deposito').modal('show');
+        }
+
+        function Registrar_Articulo() {
+
+            var $data = {
+
+                IdSucursal: $("#txt_idsucursal").val(),
+                Nombre_articulo: $("#txt_nombre_articulo").val(),
+                Cantidad: $("#txt_cantidad").val(),
+
+            }
+               jQuery.ajax({
+                 url: "@Url.Action("Registrar_Articulo_Deposito", "Inicio")",
+                 type: "POST",
+                 data: JSON.stringify($data),
+                 dataType: "json",
+                 contentType: "application/json; charset=utf-8",
+                    success: function (data) {
+
+                        if (data==true) {
+
+                            alert("registro realizado");
+                            $("#txt_nombre_empresa").val(""),
+                            $("#txt_nombre_sucursal").val(""),
+                            $("#txt_nombre_articulo").val(""),
+                            $("#txt_cantidad").val(""),
+                            $('#modal_administrar').modal('show');
+                            $('#modal_nuevo_deposito').modal('hide');
+                        } else {
+
+                            alert("error");
+                        }
+
+
+
+
+                    }
+             });
+
+
+        }
+
+
+       function Registrar_Empresa() {
+
+            var $data = {
+
+                Nombre_empresa: $("#txt_empresa").val(),
+                Direccion_empresa: $("#txt_direccion").val(),
+
+            }
+               jQuery.ajax({
+                 url: "@Url.Action("Registrar_Empresa", "Inicio")",
+                 type: "POST",
+                 data: JSON.stringify($data),
+                 dataType: "json",
+                 contentType: "application/json; charset=utf-8",
+                    success: function (data) {
+
+                        if (data==true) {
+
+                            alert("registro realizado");
+                            $("#txt_empresa").val(""),
+                            $("#txt_direccion").val(""),
+
+                         $('#modal_registrar_empresa').modal('hide');
+
+                            tabla_empresas.ajax.reload();
+                        } else {
+
+                            alert("error");
+                        }
+
+
+
+
+                    }
+             });
+
+
+        }
+
+
+        function Registrar_Sucursal() {
+
+            var $data = {
+                IdEmpresa: $("#txt_idempresa").val(),
+                Nombre_sucursal: $("#txt_sucursal").val(),
+            }
+               jQuery.ajax({
+                 url: "@Url.Action("Registrar_Sucursal", "Inicio")",
+                 type: "POST",
+                 data: JSON.stringify($data),
+                 dataType: "json",
+                 contentType: "application/json; charset=utf-8",
+                    success: function (data) {
+
+                        if (data==true) {
+
+                            alert("registro realizado");
+                            $("#txt_sucursal").val(""),
+                        
+                            $('#modal_registrar_sucursal').modal('hide');
+                            $('#modal_administrar').modal('show');
+                            tabla_sucursales.ajax.reload();
+                        } else {
+
+                            alert("error");
+                        }
+
+
+
+
+                    }
+             });
+
+
+        }
+    </script>
+
+
+
+</body>
+</html>
